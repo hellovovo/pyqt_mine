@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>234</width>
+    <height>286</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>扫雷</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>200</width>
+      <height>200</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QWidget{
+	background-color:#ccc
+}</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>230</y>
+      <width>181</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>计时图标</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>240</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>10</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>雷图标</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>234</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_game">
+    <property name="title">
+     <string>游戏(G)</string>
+    </property>
+    <addaction name="actionnew_game"/>
+    <addaction name="separator"/>
+    <addaction name="actioncount"/>
+    <addaction name="actionoptions"/>
+    <addaction name="actionlook"/>
+    <addaction name="separator"/>
+    <addaction name="actionexit"/>
+   </widget>
+   <widget class="QMenu" name="menu_help">
+    <property name="title">
+     <string>帮助(H)</string>
+    </property>
+    <addaction name="actionshow_help"/>
+    <addaction name="separator"/>
+    <addaction name="actionabout_2"/>
+    <addaction name="actionmore_game"/>
+   </widget>
+   <addaction name="menu_game"/>
+   <addaction name="menu_help"/>
+  </widget>
+  <action name="actionnew_game">
+   <property name="text">
+    <string>新游戏(N)    F2</string>
+   </property>
+  </action>
+  <action name="actioncount">
+   <property name="text">
+    <string>统计信息(S)  F4</string>
+   </property>
+  </action>
+  <action name="actionoptions">
+   <property name="text">
+    <string>选项(O)  F5</string>
+   </property>
+  </action>
+  <action name="actionlook">
+   <property name="text">
+    <string>更改外观(A)  F7</string>
+   </property>
+  </action>
+  <action name="actionexit">
+   <property name="text">
+    <string>退出(X)</string>
+   </property>
+  </action>
+  <action name="actionshow_help">
+   <property name="text">
+    <string>查看帮助(V)  F1</string>
+   </property>
+  </action>
+  <action name="actionabout">
+   <property name="text">
+    <string>about</string>
+   </property>
+  </action>
+  <action name="actionabout_2">
+   <property name="text">
+    <string>关于扫雷(A)</string>
+   </property>
+  </action>
+  <action name="actionmore_game">
+   <property name="text">
+    <string>联机获得更多游戏(M)</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
