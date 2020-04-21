@@ -1,5 +1,5 @@
 from PyQt5 import QtGui
-from PyQt5.QtCore import QEvent, QRect
+from PyQt5.QtCore import QEvent, QRect, QTimer
 from PyQt5.QtGui import QPainter, QPen, QColor, QBrush, QFont, QMouseEvent, QBitmap, QImage, QPixmap
 from PyQt5.QtWidgets import QWidget, QStyleOption, QStyle, QDialog, QMessageBox
 
@@ -20,18 +20,51 @@ class SimpleWidget(QWidget):
         self.game_safe_pos = set()
         self.flag = None
         # self.lei=  None
+        self.lab_time = None
+        self.lab_cnt = None
+        self.time_cnt = 0
+        self.start_tag = False
+
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.update_time)
+        self.timer.start(1000)
 
         self.init_data()
 
-    def init_data(self):
-        self.flag = QImage('../imgs/img_flag.jpg')
-        # self.flag = self.flag.scaledToHeight(50)
-        self.lei = QImage('../imgs/lei.jpg')
-        # self.lei = self.lei.scaledToHeight(50)
 
-        self.mine = set()
-        self.tags = set()
-        self.safe_pos = {}
+    def bind_view(self,lab_time,lab_cnt):
+        self.lab_time = lab_time
+        self.lab_cnt = lab_cnt
+
+    def update_cnt(self):
+        if not self.lab_cnt:
+            return
+        cnt = 10 - len(self.tags)
+        self.lab_cnt.setText(str(cnt))
+
+    def update_time(self):
+        if self.failed or self.wintag:
+            return
+        if not self.lab_time:
+            return
+        if not self.start_tag:
+            return
+        self.lab_time.setText(str(self.time_cnt))
+        self.time_cnt += 1
+
+
+    def init_data(self):
+        self.flag = QImage('imgs/img_flag.jpg')
+        self.flag = self.flag.scaledToWidth(18)
+        self.lei = QImage('imgs/lei.jpg')
+        self.lei = self.lei.scaledToWidth(18)
+
+        self.mine.clear()
+        self.tags.clear()
+        self.safe_pos.clear()
+        self.start_tag = False
+        self.time_cnt = 0
+
         self.failed = False
         self.wintag = False
         self.checked = set()
@@ -49,6 +82,7 @@ class SimpleWidget(QWidget):
             r, c = divmod(num, 9)
             self.mine.add((r, c))
             self.game_safe_pos.remove((r, c))
+        self.update_cnt()
         self.update()
 
     def paintEvent(self, a0: QtGui.QPaintEvent) -> None:
@@ -70,26 +104,24 @@ class SimpleWidget(QWidget):
         p.setBrush(QBrush(QColor(212, 100, 123)))
         # for item in self.clicked_pos:
         #     p.drawEllipse(item[0]*20+12,item[1]*20+12,16,16)
-        if self.failed:
-            for item in self.mine:
-                p.drawEllipse(item[0] * 20 + 12, item[1] * 20 + 12, 16, 16)
+
 
         for pos in self.tags:
-            # p.setBrush(QBrush(QColor(230, 70, 70)))
-            # p.drawRect(15 + pos[0] * 20, 15 + pos[1] * 20, 10, 10)
-            # p.drawImage(0,0,self.flag,0,0,20,20)
-            p.drawImage(QRect(pos[0],pos[1],400,400),self.lei)
+            p.drawImage(11+pos[0]*20,11+pos[1]*20,self.flag,0,0,18,18)
 
         for pos in self.safe_pos.keys():
             p.setPen(QColor(150, 150, 150))
             p.setBrush(QBrush(QColor(150, 150, 150)))
-            p.drawRect(10 + pos[0] * 20, 10 + pos[1] * 20, 20, 20)
+            p.drawRect(11 + pos[0] * 20, 11 + pos[1] * 20, 18, 18)
             if self.safe_pos[pos] != 0:
-                p.setPen(QColor(100, 230, 120))
+                p.setPen(QColor(15, 230, 60))
                 p.setFont(QFont('宋体', 18, 18))
                 p.drawText(10 + pos[0] * 20, 10 + pos[1] * 20 + 20, str(self.safe_pos[pos]))
-        p.drawImage(0,0,self.lei,0,0,100,100)
-        p.end()
+
+        if self.failed:
+            for item in self.mine:
+                # p.drawEllipse(item[0] * 20 + 12, item[1] * 20 + 12, 16, 16)
+                p.drawImage(11 + item[0] * 20, 11 + item[1] * 20, self.lei, 0, 0, 18, 18)
 
     def mouseReleaseEvent(self, a0: QtGui.QMouseEvent) -> None:
         if self.failed or self.wintag:
@@ -101,11 +133,14 @@ class SimpleWidget(QWidget):
         print(a0.type())
         if a0.button() == 1:
             self.processPos(pos)
+            self.start_tag = True
         else:
             if pos in self.tags:
                 self.tags.remove(pos)
             else:
-                self.tags.add(pos)
+                if pos not in self.safe_pos:
+                    self.tags.add(pos)
+            self.update_cnt()
         self.update()
         if self.wintag:
             QMessageBox.information(self, '胜利', '您赢了，好厉害哟！', QMessageBox.Ok)

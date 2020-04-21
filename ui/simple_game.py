@@ -27,7 +27,7 @@ class Ui_MainWindow(object):
         self.label_timer = QtWidgets.QLabel(self.centralwidget)
         self.label_timer.setGeometry(QtCore.QRect(34, 229, 30, 30))
         self.label_timer.setText("")
-        self.label_timer.setPixmap(QtGui.QPixmap("../imgs/timer.png"))
+        self.label_timer.setPixmap(QtGui.QPixmap("imgs/timer.png"))
         self.label_timer.setScaledContents(True)
         self.label_timer.setObjectName("label_timer")
         self.label_time = QtWidgets.QLabel(self.centralwidget)
@@ -40,7 +40,7 @@ class Ui_MainWindow(object):
         self.label_4.setEnabled(True)
         self.label_4.setGeometry(QtCore.QRect(190, 231, 25, 25))
         self.label_4.setText("")
-        self.label_4.setPixmap(QtGui.QPixmap("../imgs/lei.png"))
+        self.label_4.setPixmap(QtGui.QPixmap("imgs/lei.png"))
         self.label_4.setScaledContents(True)
         self.label_4.setObjectName("label_4")
         MainWindow.setCentralWidget(self.centralwidget)
@@ -84,13 +84,15 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menu_game.menuAction())
         self.menubar.addAction(self.menu_help.menuAction())
 
+        self.widget.bind_view(self.label_time,self.label_cnt)
+
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "扫雷"))
-        self.label_time.setText(_translate("MainWindow", "240"))
+        self.label_time.setText(_translate("MainWindow", "0"))
         self.label_cnt.setText(_translate("MainWindow", "10"))
         self.menu_game.setTitle(_translate("MainWindow", "游戏(G)"))
         self.menu_help.setTitle(_translate("MainWindow", "帮助(H)"))
