@@ -1,6 +1,6 @@
 from PyQt5 import QtGui
-from PyQt5.QtCore import QEvent
-from PyQt5.QtGui import QPainter, QPen, QColor, QBrush, QFont, QMouseEvent
+from PyQt5.QtCore import QEvent, QRect
+from PyQt5.QtGui import QPainter, QPen, QColor, QBrush, QFont, QMouseEvent, QBitmap, QImage, QPixmap
 from PyQt5.QtWidgets import QWidget, QStyleOption, QStyle, QDialog, QMessageBox
 
 import random
@@ -18,10 +18,17 @@ class SimpleWidget(QWidget):
         self.checked = set()
         self.wintag = False
         self.game_safe_pos = set()
+        self.flag = None
+        # self.lei=  None
 
         self.init_data()
 
     def init_data(self):
+        self.flag = QImage('../imgs/img_flag.jpg')
+        # self.flag = self.flag.scaledToHeight(50)
+        self.lei = QImage('../imgs/lei.jpg')
+        # self.lei = self.lei.scaledToHeight(50)
+
         self.mine = set()
         self.tags = set()
         self.safe_pos = {}
@@ -68,8 +75,10 @@ class SimpleWidget(QWidget):
                 p.drawEllipse(item[0] * 20 + 12, item[1] * 20 + 12, 16, 16)
 
         for pos in self.tags:
-            p.setBrush(QBrush(QColor(230, 70, 70)))
-            p.drawRect(15 + pos[0] * 20, 15 + pos[1] * 20, 10, 10)
+            # p.setBrush(QBrush(QColor(230, 70, 70)))
+            # p.drawRect(15 + pos[0] * 20, 15 + pos[1] * 20, 10, 10)
+            # p.drawImage(0,0,self.flag,0,0,20,20)
+            p.drawImage(QRect(pos[0],pos[1],400,400),self.lei)
 
         for pos in self.safe_pos.keys():
             p.setPen(QColor(150, 150, 150))
@@ -79,6 +88,8 @@ class SimpleWidget(QWidget):
                 p.setPen(QColor(100, 230, 120))
                 p.setFont(QFont('宋体', 18, 18))
                 p.drawText(10 + pos[0] * 20, 10 + pos[1] * 20 + 20, str(self.safe_pos[pos]))
+        p.drawImage(0,0,self.lei,0,0,100,100)
+        p.end()
 
     def mouseReleaseEvent(self, a0: QtGui.QMouseEvent) -> None:
         if self.failed or self.wintag:

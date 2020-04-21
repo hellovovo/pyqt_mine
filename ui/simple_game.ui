@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>234</width>
-    <height>286</height>
+    <width>237</width>
+    <height>292</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,58 +29,72 @@
 }</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QLabel" name="label_timer">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>230</y>
-      <width>181</width>
-      <height>22</height>
+      <x>34</x>
+      <y>229</y>
+      <width>30</width>
+      <height>30</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>计时图标</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>240</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>10</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>雷图标</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../imgs/timer.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_time">
+    <property name="geometry">
+     <rect>
+      <x>78</x>
+      <y>236</y>
+      <width>18</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>240</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_cnt">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>236</y>
+      <width>16</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>10</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>231</y>
+      <width>25</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../imgs/lei.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -88,7 +102,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>234</width>
+     <width>237</width>
      <height>23</height>
     </rect>
    </property>
