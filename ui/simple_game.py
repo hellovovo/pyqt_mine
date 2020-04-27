@@ -8,44 +8,46 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QFont
 
 from widgets.Simple_gaem_Widget import SimpleWidget
 
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+
+    def setupUi(self, MainWindow,*args):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(237, 292)
+        MainWindow.resize(860, 910)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.widget = SimpleWidget(self.centralwidget)
-        self.widget.setGeometry(QtCore.QRect(20, 20, 200, 200))
+        self.widget = SimpleWidget(self.centralwidget,*args)
+        self.widget.setGeometry(QtCore.QRect(25, 25, 810, 810))
         self.widget.setStyleSheet("QWidget{\n"
 "    background-color:#ccc\n"
 "}")
         self.widget.setObjectName("widget")
         self.label_timer = QtWidgets.QLabel(self.centralwidget)
-        self.label_timer.setGeometry(QtCore.QRect(34, 229, 30, 30))
+        self.label_timer.setGeometry(QtCore.QRect(25, 840, 45, 45))
         self.label_timer.setText("")
         self.label_timer.setPixmap(QtGui.QPixmap("imgs/timer.png"))
         self.label_timer.setScaledContents(True)
         self.label_timer.setObjectName("label_timer")
         self.label_time = QtWidgets.QLabel(self.centralwidget)
-        self.label_time.setGeometry(QtCore.QRect(78, 236, 18, 20))
+        self.label_time.setGeometry(QtCore.QRect(95, 840, 100, 45))
         self.label_time.setObjectName("label_time")
         self.label_cnt = QtWidgets.QLabel(self.centralwidget)
-        self.label_cnt.setGeometry(QtCore.QRect(170, 236, 16, 16))
+        self.label_cnt.setGeometry(QtCore.QRect(730, 840, 45, 45))
         self.label_cnt.setObjectName("label_cnt")
         self.label_4 = QtWidgets.QLabel(self.centralwidget)
         self.label_4.setEnabled(True)
-        self.label_4.setGeometry(QtCore.QRect(190, 231, 25, 25))
+        self.label_4.setGeometry(QtCore.QRect(780, 840, 45, 45))
         self.label_4.setText("")
         self.label_4.setPixmap(QtGui.QPixmap("imgs/lei.png"))
         self.label_4.setScaledContents(True)
         self.label_4.setObjectName("label_4")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 237, 23))
+        self.menubar.setGeometry(QtCore.QRect(785, 775, 45, 45))
         self.menubar.setObjectName("menubar")
         self.menu_game = QtWidgets.QMenu(self.menubar)
         self.menu_game.setObjectName("menu_game")
@@ -86,6 +88,8 @@ class Ui_MainWindow(object):
 
         self.widget.bind_view(self.label_time,self.label_cnt)
 
+        _translate = QtCore.QCoreApplication.translate
+        self.label_cnt.setText(_translate("MainWindow", str(args[0]['mine'])))
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -93,7 +97,9 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "扫雷"))
         self.label_time.setText(_translate("MainWindow", "0"))
-        self.label_cnt.setText(_translate("MainWindow", "10"))
+        self.label_time.setFont(QFont('宋体',25,25))
+
+        self.label_cnt.setFont(QFont('宋体', 25, 25))
         self.menu_game.setTitle(_translate("MainWindow", "游戏(G)"))
         self.menu_help.setTitle(_translate("MainWindow", "帮助(H)"))
         self.actionnew_game.setText(_translate("MainWindow", "新游戏(N)    F2"))
