@@ -128,17 +128,62 @@ class SimpleWidget(QWidget):
                 # p.drawEllipse(item[0] * 20 + 12, item[1] * 20 + 12, 16, 16)
                 p.drawImage(3 + item[0] * cell_row, 3 + item[1] * cell_col, self.lei, 0, 0, cell_row - 2, cell_col - 2)
 
+    # 处理双击事件
+    def mouseDoubleClickEvent(self, a0: QtGui.QMouseEvent) -> None:
+        if self.failed or self.wintag:
+            return
+        pos = self.getPos(a0)
+        if not pos:
+            return
+        if pos not in self.safe_pos:
+            self.processPos(pos)
+            return
+        self.inferPos(pos)
+        if self.wintag:
+            QMessageBox.information(self, '胜利', '您赢了，好厉害哟！', QMessageBox.Ok)
+
+    def inferPos(self,pos):
+        x,y = pos
+        cnt =  0
+        checkPoses = []
+        for i in range(-1, 2):
+            ix = x + i
+            for j in range(-1, 2):
+                iy = j + y
+                if ix == x and iy == y:
+                    continue
+                if (ix, iy) in self.tags:
+                    cnt += 1
+                else:
+                    checkPoses.append((ix,iy))
+        if self.safe_pos[pos] == cnt:
+            for checkPos in checkPoses:
+                self.processPos(checkPos)
+
+
+
+
+    def getPos(self,a0):
+        x, y = a0.x(), a0.y()
+
+        width, height = self.width() - 4, self.height() - 4
+        cell_row, cell_col = width // self.col, height // self.row
+
+        self.flag = self.flag.scaledToHeight(cell_row)
+        self.lei = self.lei.scaledToHeight(cell_col)
+        posX, posY = x // cell_col, y // cell_row
+        if posY >= self.row or posX >= self.col:
+            return
+        pos = (posX, posY)
+        return pos
+
     def mouseReleaseEvent(self, a0: QtGui.QMouseEvent) -> None:
         if self.failed or self.wintag:
             return
 
-        x, y = a0.x(), a0.y()
-        width, height = self.width() - 4, self.height() - 4
-        cell_row, cell_col = width // self.col, height // self.row
-        self.flag = self.flag.scaledToHeight(cell_row)
-        self.lei = self.lei.scaledToHeight(cell_col)
-        posX, posY = x // cell_col, y // cell_row
-        pos = (posX, posY)
+        pos = self.getPos(a0)
+        if not pos:
+            return
         print(a0.button())
         print(a0.type())
         if a0.button() == 1:
@@ -156,6 +201,9 @@ class SimpleWidget(QWidget):
             QMessageBox.information(self, '胜利', '您赢了，好厉害哟！', QMessageBox.Ok)
 
     def processPos(self, pos):
+
+        if pos[0] >= self.row or pos[1] >= self.col:
+            return
         if pos in self.mine:
             self.failed = True
             self.update()
@@ -165,6 +213,8 @@ class SimpleWidget(QWidget):
 
     def check(self, pos):
         x, y = pos
+        if x >= self.row or y >= self.col:
+            return
         cnt = 0
         for i in range(-1, 2):
             ix = x + i
